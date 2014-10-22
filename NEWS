@@ -1,0 +1,69 @@
+Version 0.6.0
+- CRAN release
+
+Version 0.5.3
+- base_id returns only column with idD if nUnits == 1
+- updates for documentation and vignettes
+
+Version 0.5.2
+- renaming of sim_gen_fe and sim_gen_re
+- update of vignettes
+
+Version 0.5.1
+- bugfix: keep attributes after sampling
+
+Version 0.5.0
+
+- R, the number of reps, is not an argument of sim_setup anymore but only of sim
+- Generator functions are now functions which f: data.frame -> data.frame
+- The response is not generated automatically but using the sim_resp component
+- comp_var function is now a wrapper around dplyr::mutate
+- sample_number and sample_fraction replace sample_srs and sample_csrs
+- agg_standard was renamed to agg_all
+- calc was renamed to comp; sim_n, sim_N, sim_popMean, sim_popVar are renamed to sim_comp_*
+- Contaminated data is now included in sim_gen_cont; argument names have changed
+- The base can explicitly be set by sim_base or simply by starting from a data.frame
+- gen_generic supports a groupVar instead of level
+
+Version 0.4.7
+
+- Preserve attributes of data in sample_* and agg_all
+
+Version 0.4.6
+
+- Describe function for sim_setup
+
+Version 0.4.5
+
+- Bugfix in sim.sim_setup pass simName
+- No garbage collection for sim with path
+
+Version 0.4.4
+
+- Bug fix in sample_csrs - Handling of numeric input with length > 1
+- Default in sim_setup is R = 1
+- Argument simName in sim.sim_setup
+- Default for simName in sim_setup is set to ""
+- Change in sim_setup, now matches the behaviour of all other components
+
+Version 0.4.3
+
+- Bug-fix in calc_var
+
+Version 0.4.2
+
+- Fix in read_simData
+- calc_var accepts a character with length > 1
+- summary.sim_setup prints str instead of head
+
+Version 0.4.1
+
+- Import dplyr(>= 0.2) - because of import of magrittr
+
+Version 0.4.0
+
+- Implementation of all relevant steps in simulation studies
+- as.data.frame for sim_setup
+- summary for sim_setup
+- sim_setup method for data.frames as link to design-based studies
+- implemented a solution for doing the simulation in parallel
