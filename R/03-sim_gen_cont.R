@@ -22,18 +22,21 @@ sim_gen_cont <- function(simSetup, generator, nCont, type, areaVar = NULL, fixed
   generator <- gen_cont(generator, nCont, type, areaVar, fixed)
   
   sim_setup(simSetup, 
-            new("sim_fun", order = 2, generator))
+            new("sim_fun", order = 2, call = match.call(), generator))
 }
 
 gen_cont <- function(generator, nCont, type, areaVar, fixed) {
   force(generator); force(nCont); force(type); force(areaVar); force(fixed)
   check_cont_input(nCont, type, fixed)
   
-  function(dat) {
+  genFun <- function(dat) {
     contData <- generator(dat)
     contData <- select_cont(contData, nCont, type, areaVar, fixed)
     replace_contData(contData, dat)
   }
+  
+  preserve_attributes(genFun)
+  
 }
 
 check_cont_input <- function(nCont, type, fixed) {
