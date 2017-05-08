@@ -1,3 +1,6 @@
+## ---- results='asis', echo=FALSE-----------------------------------------
+cat(gsub("\\n   ", "", packageDescription("saeSim", fields = "Description")))
+
 ## ---- echo=FALSE---------------------------------------------------------
 set.seed(1)
 
@@ -30,32 +33,14 @@ setup
 #  setup1 <- setup %>% sim_sample(sample_fraction(0.05))
 #  setup2 <- setup %>% sim_sample(sample_number(5))
 
-## ----echo=FALSE, dpi=100-------------------------------------------------
-# This is too large in terms of MB for a vignette inside a package.
-# library(DiagrammeR)
-# grViz("
-# digraph boxes_and_circles {
-# node [shape = box]
-# sim_base
-# sim_gen
-# sim_sample
-# sim_comp_sample
-# sim_agg
-# 
-# sim_base -> sim_gen [label = '       add variables to data in sim_base']; 
-# sim_gen -> sim_sample [label = '    draw a sample'];
-# sim_sample -> sim_comp_sample [label = '      make predictions']; 
-# sim_comp_sample -> sim_agg [label = '     aggregate your data'];
-# 
-# }
-# ")
-
 ## ------------------------------------------------------------------------
 setup <- sim_base_lmm()
-plot(setup)
-autoplot(setup)
-autoplot(setup, "e")
-autoplot(setup %>% sim_gen_vc())
+
+## ----eval = FALSE--------------------------------------------------------
+#  plot(setup)
+#  autoplot(setup)
+#  autoplot(setup, "e")
+#  autoplot(setup %>% sim_gen_vc())
 
 ## ------------------------------------------------------------------------
 base_id(2, 3) %>% 
