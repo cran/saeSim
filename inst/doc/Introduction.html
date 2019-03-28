@@ -11,54 +11,286 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2017-05-06" />
+<meta name="date" content="2019-03-28" />
 
 <title>Simulation Tools for Small Area Estimation</title>
 
 
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
 </style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
-<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 </head>
 
@@ -68,7 +300,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 <h1 class="title toc-ignore">Simulation Tools for Small Area Estimation</h1>
-<h4 class="date"><em>2017-05-06</em></h4>
+<h4 class="date"><em>2019-03-28</em></h4>
 
 
 
@@ -81,44 +313,44 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="an-initial-example" class="section level2">
 <h2>An initial Example</h2>
 <p>Consider a linear mixed model. It contains two components. A fixed effects part, and an error component. The error component can be split into a random effects part and a model error.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(saeSim)
-setup &lt;-<span class="st"> </span><span class="kw">sim_base</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_x</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_e</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_v</span>() %&gt;%
-<span class="st">  </span><span class="kw">sim_resp_eq</span>(<span class="dt">y =</span> <span class="dv">100</span> +<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span>x +<span class="st"> </span>v +<span class="st"> </span>e) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_simName</span>(<span class="st">&quot;Doku&quot;</span>)
-setup</code></pre></div>
-<pre><code>## # data.frame [10,000 × 6]
-##     idD   idU          x         e         v         y
-## * &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1     1     1 -2.5058152 -3.217326 0.2353485  92.00639
-## 2     1     2  0.7345733 -4.226103 0.2353485  97.47839
-## 3     1     3 -3.3425144 -4.141583 0.2353485  89.40874
-## 4     1     4  6.3811232 -4.742241 0.2353485 108.25535
-## 5     1     5  1.3180311 -2.001758 0.2353485 100.86965
-## 6     1     6 -3.2818735 -2.099955 0.2353485  91.57165
-## # ... with 9,994 more rows</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(saeSim)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">setup &lt;-<span class="st"> </span><span class="kw">sim_base</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="st">  </span><span class="kw">sim_gen_x</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="st">  </span><span class="kw">sim_gen_e</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="st">  </span><span class="kw">sim_gen_v</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="st">  </span><span class="kw">sim_resp_eq</span>(<span class="dt">y =</span> <span class="dv">100</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>v <span class="op">+</span><span class="st"> </span>e) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="st">  </span><span class="kw">sim_simName</span>(<span class="st">&quot;Doku&quot;</span>)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">setup</a></code></pre></div>
+<pre><code>## # Description: data.frame [10,000 × 6]
+##     idD   idU      x     e     v     y
+## * &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     1     1 -2.51  -3.22 0.235  92.0
+## 2     1     2  0.735 -4.23 0.235  97.5
+## 3     1     3 -3.34  -4.14 0.235  89.4
+## 4     1     4  6.38  -4.74 0.235 108. 
+## 5     1     5  1.32  -2.00 0.235 101. 
+## 6     1     6 -3.28  -2.10 0.235  91.6
+## # … with 9,994 more rows</code></pre>
 <p><code>sim_base()</code> is responsible to supply a <code>data.frame</code> to which variables can be added. The default is to create a <code>data.frame</code> with indicator variables <code>idD</code> and <code>idU</code> (2-level-model), which uniquely identify observations. ‘D’ stands for the domain, i.e. the grouping variable. ‘U’ stands for unit and is the identifier of single observations within domains. <code>sim_resp</code> will add a variable <code>y</code> as response.</p>
 <p>The setup itself does not contain the simulated data but the functions to process the data. To start a simulation use the function <code>sim</code>. It will return a <code>list</code> containing <code>data.frames</code> as elements:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dataList &lt;-<span class="st"> </span><span class="kw">sim</span>(setup, <span class="dt">R =</span> <span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">dataList &lt;-<span class="st"> </span><span class="kw">sim</span>(setup, <span class="dt">R =</span> <span class="dv">10</span>)</a></code></pre></div>
 <p>You can coerce a simulation setup to a <code>data.frame</code> with <code>as.data.frame</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simData &lt;-<span class="st"> </span><span class="kw">sim_base</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_x</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_e</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span>as.data.frame
-simData</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">simData &lt;-<span class="st"> </span><span class="kw">sim_base</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw">sim_gen_x</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw">sim_gen_e</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span>as.data.frame</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">simData</a></code></pre></div>
 </div>
 <div id="naming-and-structure" class="section level2">
 <h2>Naming and structure</h2>
 <p>Components in a simulation setup should be added using the pipe operator <code>%&gt;%</code> from magrittr. A component defines ‘when’ a specific function will be applied in a chain of functions. To add a component you can use one of: <code>sim_gen</code>, <code>sim_resp</code>, <code>sim_comp_pop</code>, <code>sim_sample</code>, <code>sim_comp_sample</code>, <code>sim_agg</code> and <code>sim_comp_agg</code>. They all expect a simulation setup as first argument and a function as second and will take care of the order in which the functions are called. The reason for this is the following:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">setup &lt;-<span class="st"> </span><span class="kw">sim_base</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_x</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_e</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_resp_eq</span>(<span class="dt">y =</span> <span class="dv">100</span> +<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span>x +<span class="st"> </span>e)
-
-setup1 &lt;-<span class="st"> </span>setup %&gt;%<span class="st"> </span><span class="kw">sim_sample</span>(<span class="kw">sample_fraction</span>(<span class="fl">0.05</span>))
-setup2 &lt;-<span class="st"> </span>setup %&gt;%<span class="st"> </span><span class="kw">sim_sample</span>(<span class="kw">sample_number</span>(<span class="dv">5</span>))</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">setup &lt;-<span class="st"> </span><span class="kw">sim_base</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw">sim_gen_x</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw">sim_gen_e</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw">sim_resp_eq</span>(<span class="dt">y =</span> <span class="dv">100</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>e)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">setup1 &lt;-<span class="st"> </span>setup <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sim_sample</span>(<span class="kw">sample_fraction</span>(<span class="fl">0.05</span>))</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">setup2 &lt;-<span class="st"> </span>setup <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sim_sample</span>(<span class="kw">sample_number</span>(<span class="dv">5</span>))</a></code></pre></div>
 <p>You can define a rudimentary scenario and only have to explain how scenarios differ. You do not have to redefine them. <code>setup1</code> and <code>setup2</code> only differ in the way samples are drawn. <code>sim_sample</code> will take care, that the sampling will take place at the appropriate place in the chain of functions no matter how <code>setup</code> was composed.</p>
 <p>If you can’t remember all function names, use auto-complete. All functions to add components start with <code>sim_</code>. And all functions meant to be used in a given phase will start with the corresponding prefix, i.e. if you set the sampling scheme you use <code>sim_sample</code> – all functions to control sampling have the prefix <code>sample</code>.</p>
 </div>
@@ -130,65 +362,65 @@ setup2 &lt;-<span class="st"> </span>setup %&gt;%<span class="st"> </span><span 
 <li><code>plot</code> - for visualizing the data</li>
 <li><code>autoplot</code> - Will imitate <code>smoothScatter</code> with ggplot2</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">setup &lt;-<span class="st"> </span><span class="kw">sim_base_lmm</span>()</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(setup)
-<span class="kw">autoplot</span>(setup)
-<span class="kw">autoplot</span>(setup, <span class="st">&quot;e&quot;</span>)
-<span class="kw">autoplot</span>(setup %&gt;%<span class="st"> </span><span class="kw">sim_gen_vc</span>())</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">setup &lt;-<span class="st"> </span><span class="kw">sim_base_lmm</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">plot</span>(setup)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">autoplot</span>(setup)</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">autoplot</span>(setup, <span class="st">&quot;e&quot;</span>)</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw">autoplot</span>(setup <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sim_gen_vc</span>())</a></code></pre></div>
 </div>
 <div id="sim_gen" class="section level2">
 <h2>sim_gen</h2>
 <div id="semi-custom-data" class="section level3">
 <h3>Semi-custom data</h3>
 <p>saeSim has an interface to standard random number generators in R. If things get more complex you can always define new generator functions.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">base_id</span>(<span class="dv">2</span>, <span class="dv">3</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen</span>(<span class="kw">gen_generic</span>(rnorm, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">10</span>, <span class="dt">name =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">groupVars =</span> <span class="st">&quot;idD&quot;</span>))</code></pre></div>
-<pre><code>## # data.frame [6 × 3]
-##     idD   idU         x
-##   &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;
-## 1     1     1 -3.477177
-## 2     1     2 -3.477177
-## 3     1     3 -3.477177
-## 4     2     1 13.219727
-## 5     2     2 13.219727
-## 6     2     3 13.219727</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">base_id</span>(<span class="dv">2</span>, <span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">sim_gen</span>(<span class="kw">gen_generic</span>(rnorm, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">10</span>, <span class="dt">name =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">groupVars =</span> <span class="st">&quot;idD&quot;</span>))</a></code></pre></div>
+<pre><code>## # Description: data.frame [6 × 3]
+##     idD   idU      x
+##   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;
+## 1     1     1  -3.48
+## 2     1     2  -3.48
+## 3     1     3  -3.48
+## 4     2     1  13.2 
+## 5     2     2  13.2 
+## 6     2     3  13.2</code></pre>
 <p>You can supply any random number generator to <code>gen_generic</code> and since we are in small area estimation you have an optional group variable to generate ‘area-level’ variables. Some short cuts for data generation are <code>sim_gen_x</code>, <code>sim_gen_v</code> and <code>sim_gen_e</code> which add normally distributed variables named ‘x’, ‘e’ and ‘v’ respectively. Also there are some function with the prefix ‘gen’ which will be extended in the future.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(saeSim)
-setup &lt;-<span class="st"> </span><span class="kw">sim_base</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_x</span>() %&gt;%<span class="st"> </span><span class="co"># Variable 'x'</span>
-<span class="st">  </span><span class="kw">sim_gen_e</span>() %&gt;%<span class="st"> </span><span class="co"># Variable 'e'</span>
-<span class="st">  </span><span class="kw">sim_gen_v</span>() %&gt;%<span class="st"> </span><span class="co"># Variable 'v' as a random-effect</span>
-<span class="st">  </span><span class="kw">sim_gen</span>(<span class="kw">gen_v_sar</span>(<span class="dt">name =</span> <span class="st">&quot;vSp&quot;</span>)) %&gt;%<span class="st"> </span><span class="co"># random-effect following a SAR(1)</span>
-<span class="st">  </span><span class="kw">sim_resp_eq</span>(<span class="dt">y =</span> <span class="dv">100</span> +<span class="st"> </span>x +<span class="st"> </span>v +<span class="st"> </span>vSp +<span class="st"> </span>e) <span class="co"># Computing 'y'</span>
-setup</code></pre></div>
-<pre><code>## # data.frame [10,000 × 7]
-##     idD   idU         x         e         v       vSp         y
-## * &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1     1     1 -3.261018 -5.797709 -1.293091 0.2919544  89.94014
-## 2     1     2  4.256857  4.773686 -1.293091 0.2919544 108.02941
-## 3     1     3 -3.071645  1.024299 -1.293091 0.2919544  96.95152
-## 4     1     4  5.208898  2.322837 -1.293091 0.2919544 106.53060
-## 5     1     5  1.908363  8.533583 -1.293091 0.2919544 109.44081
-## 6     1     6 -2.660212  3.759640 -1.293091 0.2919544 100.09829
-## # ... with 9,994 more rows</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">library</span>(saeSim)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">setup &lt;-<span class="st"> </span><span class="kw">sim_base</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">  </span><span class="kw">sim_gen_x</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Variable 'x'</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw">sim_gen_e</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Variable 'e'</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="st">  </span><span class="kw">sim_gen_v</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Variable 'v' as a random-effect</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="st">  </span><span class="kw">sim_gen</span>(<span class="kw">gen_v_sar</span>(<span class="dt">name =</span> <span class="st">&quot;vSp&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># random-effect following a SAR(1)</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="st">  </span><span class="kw">sim_resp_eq</span>(<span class="dt">y =</span> <span class="dv">100</span> <span class="op">+</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>v <span class="op">+</span><span class="st"> </span>vSp <span class="op">+</span><span class="st"> </span>e) <span class="co"># Computing 'y'</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">setup</a></code></pre></div>
+<pre><code>## # Description: data.frame [10,000 × 7]
+##     idD   idU     x     e     v     vSp     y
+## * &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1     1     1 -3.26 -5.80 -1.29 0.00300  89.7
+## 2     1     2  4.26  4.77 -1.29 0.00300 108. 
+## 3     1     3 -3.07  1.02 -1.29 0.00300  96.7
+## 4     1     4  5.21  2.32 -1.29 0.00300 106. 
+## 5     1     5  1.91  8.53 -1.29 0.00300 109. 
+## 6     1     6 -2.66  3.76 -1.29 0.00300  99.8
+## # … with 9,994 more rows</code></pre>
 </div>
 <div id="contaminated-data" class="section level3">
 <h3>Contaminated data</h3>
 <p>For contaminated data you can use the same generator functions, however, instead of using <code>sim_gen</code> you use <code>sim_gen_cont</code> which will have some extra arguments to control the contamination. To extend the above setup with a contaminated spatially correlated error component you can add the following:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">contSetup &lt;-<span class="st"> </span>setup %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_cont</span>(
-    <span class="kw">gen_v_sar</span>(<span class="dt">sd =</span> <span class="dv">40</span>, <span class="dt">name =</span> <span class="st">&quot;vSp&quot;</span>), <span class="co"># defining the model</span>
-    <span class="dt">nCont =</span> <span class="fl">0.05</span>, <span class="co"># 5 per cent outliers</span>
-    <span class="dt">type =</span> <span class="st">&quot;area&quot;</span>, <span class="co"># whole areas are outliers, i.e. all obs within</span>
-    <span class="dt">areaVar =</span> <span class="st">&quot;idD&quot;</span>, <span class="co"># var name to identify domain</span>
-    <span class="dt">fixed =</span> <span class="ot">TRUE</span> <span class="co"># if in each iteration the same area is an outlier</span>
-  )</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">contSetup &lt;-<span class="st"> </span>setup <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">sim_gen_cont</span>(</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">    <span class="kw">gen_v_sar</span>(<span class="dt">sd =</span> <span class="dv">40</span>, <span class="dt">name =</span> <span class="st">&quot;vSp&quot;</span>), <span class="co"># defining the model</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">    <span class="dt">nCont =</span> <span class="fl">0.05</span>, <span class="co"># 5 per cent outliers</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">    <span class="dt">type =</span> <span class="st">&quot;area&quot;</span>, <span class="co"># whole areas are outliers, i.e. all obs within</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">    <span class="dt">areaVar =</span> <span class="st">&quot;idD&quot;</span>, <span class="co"># var name to identify domain</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">    <span class="dt">fixed =</span> <span class="ot">TRUE</span> <span class="co"># if in each iteration the same area is an outlier</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8">  )</a></code></pre></div>
 <p>Note that the generator is the same but with a higher standard deviation. The argument <code>nCont</code> controls how much observations are contaminated. Values &lt; 1 are interpreted as probability. A single number as the number of contaminated units (can be areas or observations in each area or observations). When given with <code>length(nCont) &gt; 1</code> it will be interpreted as number of contaminated observations in each area. Use the following example to see how these things play together:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">base_id</span>(<span class="dv">3</span>, <span class="dv">4</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_x</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_e</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_ec</span>(<span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">150</span>, <span class="dt">name =</span> <span class="st">&quot;eCont&quot;</span>, <span class="dt">nCont =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)) %&gt;%
-<span class="st">  </span>as.data.frame</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">base_id</span>(<span class="dv">3</span>, <span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw">sim_gen_x</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="st">  </span><span class="kw">sim_gen_e</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="st">  </span><span class="kw">sim_gen_ec</span>(<span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">150</span>, <span class="dt">name =</span> <span class="st">&quot;eCont&quot;</span>, <span class="dt">nCont =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="st">  </span>as.data.frame</a></code></pre></div>
 <pre><code>##    idD idU          x           e      eCont   idC
 ## 1    1   1  2.1238928  2.85552209    0.00000 FALSE
 ## 2    1   2  1.8224797 -3.70320125    0.00000 FALSE
@@ -212,47 +444,47 @@ setup</code></pre></div>
 <li><code>sim_comp_sample</code> - add a computation after sampling</li>
 <li><code>sim_comp_agg</code> - add a computation after aggregation</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">base_id</span>(<span class="dv">2</span>, <span class="dv">3</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_x</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_e</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_ec</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_resp_eq</span>(<span class="dt">y =</span> <span class="dv">100</span> +<span class="st"> </span>x +<span class="st"> </span>e) %&gt;%
-<span class="st">   </span><span class="co"># the mean in each domain:</span>
-<span class="st">  </span><span class="kw">sim_comp_pop</span>(<span class="kw">comp_var</span>(<span class="dt">popMean =</span> <span class="kw">mean</span>(y)), <span class="dt">by =</span> <span class="st">&quot;idD&quot;</span>)</code></pre></div>
-<pre><code>## # data.frame [6 × 7]
-##     idD   idU          x         e   idC        y  popMean
-## * &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;     &lt;dbl&gt; &lt;lgl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1     1     1  0.5746668 6.6169891 FALSE 107.1917 108.2884
-## 2     1     2  3.7688622 0.2257547 FALSE 103.9946 108.2884
-## 3     1     3 12.6044689 1.0745909 FALSE 113.6791 108.2884
-## 4     2     1  6.6417051 5.0116040 FALSE 111.6533 106.3608
-## 5     2     2 -0.8421809 3.4132565 FALSE 102.5711 106.3608
-## 6     2     3  4.4991934 0.3587781 FALSE 104.8580 106.3608</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">base_id</span>(<span class="dv">2</span>, <span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">sim_gen_x</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw">sim_gen_e</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">  </span><span class="kw">sim_gen_ec</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="st">  </span><span class="kw">sim_resp_eq</span>(<span class="dt">y =</span> <span class="dv">100</span> <span class="op">+</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>e) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="st">   </span><span class="co"># the mean in each domain:</span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="st">  </span><span class="kw">sim_comp_pop</span>(<span class="kw">comp_var</span>(<span class="dt">popMean =</span> <span class="kw">mean</span>(y)), <span class="dt">by =</span> <span class="st">&quot;idD&quot;</span>)</a></code></pre></div>
+<pre><code>## # Description: data.frame [6 × 7]
+##     idD   idU       x     e idC       y popMean
+## * &lt;int&gt; &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+## 1     1     1   0.575 6.62  FALSE  107.    108.
+## 2     1     2   3.77  0.226 FALSE  104.    108.
+## 3     1     3  12.6   1.07  FALSE  114.    108.
+## 4     2     1   6.64  5.01  FALSE  112.    106.
+## 5     2     2  -0.842 3.41  FALSE  103.    106.
+## 6     2     3   4.50  0.359 FALSE  105.    106.</code></pre>
 <p>The function <code>comp_var</code> is a wrapper around <code>dplyr::mutate</code> so you can add simple data manipulations. The argument <code>by</code> is a little extension and lets you define operations in the scope of groups identified by a variable in the data. In this case the mean of the variable ‘y’ is computed for every group identified with the variable ‘idD’. This is done before sampling, hence the prefix ‘pop’ for population.</p>
 <div id="add-custom-computation-functions" class="section level3">
 <h3>Add custom computation functions</h3>
 <p>By adding computation functions you can extend the functionality to wrap your whole simulation. This will separate the utility of this package from only generating data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">comp_linearPredictor &lt;-<span class="st"> </span>function(dat) {
-  dat$linearPredictor &lt;-<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, dat) %&gt;%<span class="st"> </span>predict
-  dat
-}
-
-<span class="kw">sim_base_lm</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_comp_pop</span>(comp_linearPredictor)</code></pre></div>
-<pre><code>## # data.frame [10,000 × 6]
-##     idD   idU          x          e         y linearPredictor
-##   &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;
-## 1     1     1 -8.5041814 -0.6369861  90.85883        91.55255
-## 2     1     2 -0.7317040  3.0870898 102.35539        99.25294
-## 3     1     3  1.1077078  6.9927853 108.10049       101.07530
-## 4     1     4  3.8226415  4.3782846 108.20093       103.76505
-## 5     1     5  0.6150609 -0.1913978 100.42366       100.58722
-## 6     1     6  0.3820305 -3.6001313  96.78190       100.35635
-## # ... with 9,994 more rows</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">comp_linearPredictor &lt;-<span class="st"> </span><span class="cf">function</span>(dat) {</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">  dat<span class="op">$</span>linearPredictor &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, dat) <span class="op">%&gt;%</span><span class="st"> </span>predict</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">  dat</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="st">  </span><span class="kw">sim_comp_pop</span>(comp_linearPredictor)</a></code></pre></div>
+<pre><code>## # Description: data.frame [10,000 × 6]
+##     idD   idU      x      e     y linearPredictor
+##   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;           &lt;dbl&gt;
+## 1     1     1 -8.50  -0.637  90.9            91.6
+## 2     1     2 -0.732  3.09  102.             99.3
+## 3     1     3  1.11   6.99  108.            101. 
+## 4     1     4  3.82   4.38  108.            104. 
+## 5     1     5  0.615 -0.191 100.            101. 
+## 6     1     6  0.382 -3.60   96.8           100. 
+## # … with 9,994 more rows</code></pre>
 <p>Or, should this be desirable, directly produce a list of <code>lm</code> objects or add them as attribute to the data. The intended way of writing functions is that they will return the modified data of class ‘data.frame’.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_base_lm</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_comp_pop</span>(function(dat) <span class="kw">lm</span>(y ~<span class="st"> </span>x, dat)) %&gt;%
-<span class="st">  </span><span class="kw">sim</span>(<span class="dt">R =</span> <span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw">sim_comp_pop</span>(<span class="cf">function</span>(dat) <span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, dat)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw">sim</span>(<span class="dt">R =</span> <span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## [[1]]
 ## 
 ## Call:
@@ -261,16 +493,16 @@ setup</code></pre></div>
 ## Coefficients:
 ## (Intercept)            x  
 ##    100.0421       0.9872</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">comp_linearModelAsAttr &lt;-<span class="st"> </span>function(dat) {
-  <span class="kw">attr</span>(dat, <span class="st">&quot;linearModel&quot;</span>) &lt;-<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, dat)
-  dat
-}
-
-dat &lt;-<span class="st"> </span><span class="kw">sim_base_lm</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_comp_pop</span>(comp_linearModelAsAttr) %&gt;%
-<span class="st">  </span>as.data.frame
-
-<span class="kw">attr</span>(dat, <span class="st">&quot;linearModel&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">comp_linearModelAsAttr &lt;-<span class="st"> </span><span class="cf">function</span>(dat) {</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">  <span class="kw">attr</span>(dat, <span class="st">&quot;linearModel&quot;</span>) &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, dat)</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">  dat</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb21-6" data-line-number="6">dat &lt;-<span class="st"> </span><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="st">  </span><span class="kw">sim_comp_pop</span>(comp_linearModelAsAttr) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="st">  </span>as.data.frame</a>
+<a class="sourceLine" id="cb21-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb21-10" data-line-number="10"><span class="kw">attr</span>(dat, <span class="st">&quot;linearModel&quot;</span>)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x, data = dat)
@@ -279,34 +511,34 @@ dat &lt;-<span class="st"> </span><span class="kw">sim_base_lm</span>() %&gt;%<s
 ## (Intercept)            x  
 ##     100.017        1.032</code></pre>
 <p>If you use any kind of sampling, the ‘linearPredictor’ can be added after sampling. This is where small area models are supposed to be applied.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_base_lm</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_sample</span>() %&gt;%
-<span class="st">  </span><span class="kw">sim_comp_sample</span>(comp_linearPredictor)</code></pre></div>
-<pre><code>## # data.frame [500 × 6]
-##     idD   idU          x         e         y linearPredictor
-## * &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;
-## 1     1    98  5.4659572 -1.314283 104.15167       105.74416
-## 2     1    27 -0.4615954  8.400955 107.93936        99.67221
-## 3     1    47  0.3575909 -2.909916  97.44767       100.51135
-## 4     1     5 -6.9000763  3.146235  96.24616        93.07688
-## 5     1    35  2.4028935 -4.400480  98.00241       102.60648
-## 6     2    50 -1.1866824  2.277745 101.09106        98.92946
-## # ... with 494 more rows</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">  </span><span class="kw">sim_sample</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="st">  </span><span class="kw">sim_comp_sample</span>(comp_linearPredictor)</a></code></pre></div>
+<pre><code>## # Description: data.frame [500 × 6]
+##     idD   idU      x     e     y linearPredictor
+## * &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;           &lt;dbl&gt;
+## 1     1    98  5.47  -1.31 104.            106. 
+## 2     1    27 -0.462  8.40 108.             99.7
+## 3     1    47  0.358 -2.91  97.4           101. 
+## 4     1     5 -6.90   3.15  96.2            93.1
+## 5     1    35  2.40  -4.40  98.0           103. 
+## 6     2    50 -1.19   2.28 101.             98.9
+## # … with 494 more rows</code></pre>
 <p>Should you want to apply area level models, use <code>sim_comp_agg</code> instead.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_base_lm</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_sample</span>() %&gt;%
-<span class="st">  </span><span class="kw">sim_agg</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_comp_agg</span>(comp_linearPredictor)</code></pre></div>
-<pre><code>## # data.frame [100 × 5]
-##     idD          x          e         y linearPredictor
-## * &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;
-## 1     1  0.2017418  2.2021169 102.40386       100.14130
-## 2     2  0.1026902 -2.5827947  97.51990       100.04071
-## 3     3 -2.0286204  2.4880119 100.45939        97.87635
-## 4     4  1.5202556 -1.4085423 100.11171       101.48026
-## 5     5 -0.6493425  0.4129929  99.76365        99.27702
-## 6     6 -1.1355290  1.4469604 100.31143        98.78329
-## # ... with 94 more rows</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="st">  </span><span class="kw">sim_sample</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="st">  </span><span class="kw">sim_agg</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="st">  </span><span class="kw">sim_comp_agg</span>(comp_linearPredictor)</a></code></pre></div>
+<pre><code>## # Description: data.frame [100 × 5]
+##     idD      x      e     y linearPredictor
+## * &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;           &lt;dbl&gt;
+## 1     1  0.202  2.20  102.            100. 
+## 2     2  0.103 -2.58   97.5           100. 
+## 3     3 -2.03   2.49  100.             97.9
+## 4     4  1.52  -1.41  100.            101. 
+## 5     5 -0.649  0.413  99.8            99.3
+## 6     6 -1.14   1.45  100.             98.8
+## # … with 94 more rows</code></pre>
 </div>
 </div>
 <div id="sim_sample" class="section level2">
@@ -316,68 +548,68 @@ dat &lt;-<span class="st"> </span><span class="kw">sim_base_lm</span>() %&gt;%<s
 <li><code>sample_number</code> - wrapper around <code>dplyr::sample_n</code></li>
 <li><code>sample_fraction</code> - wrapper around <code>dplyr::sample_frac</code></li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">base_id</span>(<span class="dv">3</span>, <span class="dv">4</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_x</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_sample</span>(<span class="kw">sample_number</span>(1L))</code></pre></div>
-<pre><code>## # data.frame [1 × 3]
-##     idD   idU         x
-## * &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;
-## 1     1     1 -7.727552</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">base_id</span>(<span class="dv">3</span>, <span class="dv">4</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_gen_x</span>() %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">sim_sample</span>(<span class="kw">sample_number</span>(1L, <span class="dt">groupVars =</span> <span class="st">&quot;idD&quot;</span>))</code></pre></div>
-<pre><code>## # data.frame [3 × 3]
-##     idD   idU          x
-## * &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;
-## 1     1     2  0.2987786
-## 2     2     4  1.6332895
-## 3     3     4 -1.8714885</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># simple random sampling:</span>
-<span class="kw">sim_base_lm</span>() %&gt;%<span class="st"> </span><span class="kw">sim_sample</span>(<span class="kw">sample_number</span>(<span class="dt">size =</span> 10L))</code></pre></div>
-<pre><code>## # data.frame [10 × 5]
-##     idD   idU          x         e         y
-## * &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1    37    63 -0.9764352 -2.664431  96.35913
-## 2    59    79 -1.1394150  4.377856 103.23844
-## 3     7    19  4.9665615 -2.242667 102.72389
-## 4    28    36  2.0034506  4.488453 106.49190
-## 5    94    47  5.8358881 -2.685873 103.15002
-## 6    46    59  6.1064004 -3.749871 102.35653
-## # ... with 4 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_base_lm</span>() %&gt;%<span class="st"> </span><span class="kw">sim_sample</span>(<span class="kw">sample_fraction</span>(<span class="dt">size =</span> <span class="fl">0.05</span>))</code></pre></div>
-<pre><code>## # data.frame [500 × 5]
-##     idD   idU          x          e         y
-## * &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
-## 1    65    24 -0.5381244  2.3337188 101.79559
-## 2    21    10  2.8677617 -4.8659246  98.00184
-## 3    95    71 -1.0059852  1.8020448 100.79606
-## 4     7    49  4.7651294 -0.5667315 104.19840
-## 5    93    68  7.6016742  1.8567419 109.45842
-## 6    94    56  7.0459706  2.7041548 109.75013
-## # ... with 494 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># srs in each domain/cluster</span>
-<span class="kw">sim_base_lm</span>() %&gt;%<span class="st"> </span><span class="kw">sim_sample</span>(<span class="kw">sample_number</span>(<span class="dt">size =</span> 10L, <span class="dt">groupVars =</span> <span class="st">&quot;idD&quot;</span>))</code></pre></div>
-<pre><code>## # data.frame [1,000 × 5]
-##     idD   idU         x         e         y
-## * &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1     1    26 -1.899145 -1.798466  96.30239
-## 2     1    49  9.347001  3.793833 113.14083
-## 3     1    95 -6.712577  5.975365  99.26279
-## 4     1    41  1.570111 -5.399290  96.17082
-## 5     1    42 -8.543439 -1.208584  90.24798
-## 6     1     3  1.488561  1.478788 102.96735
-## # ... with 994 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sim_base_lm</span>() %&gt;%<span class="st"> </span><span class="kw">sim_sample</span>(<span class="kw">sample_fraction</span>(<span class="dt">size =</span> <span class="fl">0.05</span>, <span class="dt">groupVars =</span> <span class="st">&quot;idD&quot;</span>))</code></pre></div>
-<pre><code>## # data.frame [500 × 5]
-##     idD   idU           x         e         y
-## * &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1     1    49  5.44806880  2.943329 108.39140
-## 2     1    12  0.09825671 -2.761338  97.33692
-## 3     1    19 -0.24713583  1.671805 101.42467
-## 4     1     5 -5.92866120  1.099122  95.17046
-## 5     1    45  4.51519676 -8.224511  96.29069
-## 6     2    32  0.09869877  6.233193 106.33189
-## # ... with 494 more rows</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">base_id</span>(<span class="dv">3</span>, <span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="st">  </span><span class="kw">sim_gen_x</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="st">  </span><span class="kw">sim_sample</span>(<span class="kw">sample_number</span>(1L))</a></code></pre></div>
+<pre><code>## # Description: data.frame [1 × 3]
+##     idD   idU     x
+##   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+## 1     1     1 -7.73</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">base_id</span>(<span class="dv">3</span>, <span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="st">  </span><span class="kw">sim_gen_x</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="st">  </span><span class="kw">sim_sample</span>(<span class="kw">sample_number</span>(1L, <span class="dt">groupVars =</span> <span class="st">&quot;idD&quot;</span>))</a></code></pre></div>
+<pre><code>## # Description: data.frame [3 × 3]
+##     idD   idU      x
+## * &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;
+## 1     1     2  0.299
+## 2     2     4  1.63 
+## 3     3     4 -1.87</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="co"># simple random sampling:</span></a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sim_sample</span>(<span class="kw">sample_number</span>(<span class="dt">size =</span> 10L))</a></code></pre></div>
+<pre><code>## # Description: data.frame [10 × 5]
+##     idD   idU      x     e     y
+##   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1    37    63 -0.976 -2.66  96.4
+## 2    59    79 -1.14   4.38 103. 
+## 3     7    19  4.97  -2.24 103. 
+## 4    28    36  2.00   4.49 106. 
+## 5    94    47  5.84  -2.69 103. 
+## 6    46    59  6.11  -3.75 102. 
+## # … with 4 more rows</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sim_sample</span>(<span class="kw">sample_fraction</span>(<span class="dt">size =</span> <span class="fl">0.05</span>))</a></code></pre></div>
+<pre><code>## # Description: data.frame [500 × 5]
+##     idD   idU      x      e     y
+##   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1    65    24 -0.538  2.33  102. 
+## 2    21    10  2.87  -4.87   98.0
+## 3    95    71 -1.01   1.80  101. 
+## 4     7    49  4.77  -0.567 104. 
+## 5    93    68  7.60   1.86  109. 
+## 6    94    56  7.05   2.70  110. 
+## # … with 494 more rows</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="co"># srs in each domain/cluster</span></a>
+<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sim_sample</span>(<span class="kw">sample_number</span>(<span class="dt">size =</span> 10L, <span class="dt">groupVars =</span> <span class="st">&quot;idD&quot;</span>))</a></code></pre></div>
+<pre><code>## # Description: data.frame [1,000 × 5]
+##     idD   idU     x     e     y
+## * &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     1    26 -1.90 -1.80  96.3
+## 2     1    49  9.35  3.79 113. 
+## 3     1    95 -6.71  5.98  99.3
+## 4     1    41  1.57 -5.40  96.2
+## 5     1    42 -8.54 -1.21  90.2
+## 6     1     3  1.49  1.48 103. 
+## # … with 994 more rows</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sim_sample</span>(<span class="kw">sample_fraction</span>(<span class="dt">size =</span> <span class="fl">0.05</span>, <span class="dt">groupVars =</span> <span class="st">&quot;idD&quot;</span>))</a></code></pre></div>
+<pre><code>## # Description: data.frame [500 × 5]
+##     idD   idU       x     e     y
+## * &lt;int&gt; &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     1    49  5.45    2.94 108. 
+## 2     1    12  0.0983 -2.76  97.3
+## 3     1    19 -0.247   1.67 101. 
+## 4     1     5 -5.93    1.10  95.2
+## 5     1    45  4.52   -8.22  96.3
+## 6     2    32  0.0987  6.23 106. 
+## # … with 494 more rows</code></pre>
 </div>
 
 
@@ -387,7 +619,7 @@ dat &lt;-<span class="st"> </span><span class="kw">sim_base_lm</span>() %&gt;%<s
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

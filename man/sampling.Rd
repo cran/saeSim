@@ -8,7 +8,8 @@
 \alias{sample_cluster_fraction}
 \title{Sampling functions}
 \usage{
-sample_fraction(size, replace = FALSE, weight = NULL, groupVars = NULL)
+sample_fraction(size, replace = FALSE, weight = NULL,
+  groupVars = NULL)
 
 sample_number(size, replace = FALSE, weight = NULL, groupVars = NULL)
 
@@ -16,7 +17,8 @@ sample_numbers(size, replace = FALSE, groupVars = NULL)
 
 sample_cluster_number(size, replace = FALSE, weight = NULL, groupVars)
 
-sample_cluster_fraction(size, replace = FALSE, weight = NULL, groupVars)
+sample_cluster_fraction(size, replace = FALSE, weight = NULL,
+  groupVars)
 }
 \arguments{
 \item{size}{For \code{sample_n()}, the number of rows to select.
@@ -37,12 +39,15 @@ frame. It supports \link[rlang:quasiquotation]{unquoting}. See
 \item{groupVars}{character with names of variables to be used for grouping.}
 }
 \description{
-These functions are intended to be used with \code{\link{sim_sample}} and not interactively. They are wrappers around \link[dplyr]{sample_frac} and \link[dplyr]{sample_n}.
+These functions are intended to be used with \code{\link{sim_sample}} and not
+interactively. They are wrappers around \link[dplyr]{sample_frac} and
+\link[dplyr]{sample_n}.
 }
 \details{
 \code{sample_numbers} is a vectorized version of \code{sample_number}.
 
-\code{sample_cluster_number} and \code{sample_cluster_fraction} will sample clusters (all units in a cluster).
+\code{sample_cluster_number} and \code{sample_cluster_fraction} will sample
+  clusters (all units in a cluster).
 }
 \examples{
 sim_base_lm() \%>\% sim_sample(sample_number(5))
