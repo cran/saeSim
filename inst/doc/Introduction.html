@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-<meta name="date" content="2022-02-07" />
+<meta name="date" content="2025-10-14" />
 
 <title>Simulation Tools for Small Area Estimation</title>
 
@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -135,13 +136,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -346,7 +354,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 <h1 class="title toc-ignore">Simulation Tools for Small Area Estimation</h1>
-<h4 class="date">2022-02-07</h4>
+<h4 class="date">2025-10-14</h4>
 
 
 
@@ -367,22 +375,32 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_resp_eq</span>(<span class="dt">y =</span> <span class="dv">100</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>v <span class="op">+</span><span class="st"> </span>e) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_simName</span>(<span class="st">&quot;Doku&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: `arrange_()` was deprecated in dplyr 0.7.0.
-## Please use `arrange()` instead.
-## See vignette(&#39;programming&#39;) for more help</code></pre>
+## ℹ Please use `arrange()` instead.
+## ℹ See vignette(&#39;programming&#39;) for more help
+## ℹ The deprecated feature was likely used in the saeSim package.
+##   Please report the issue at &lt;https://github.com/wahani/saeSim/issues&gt;.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
 <pre><code>## Warning: `group_by_()` was deprecated in dplyr 0.7.0.
-## Please use `group_by()` instead.
-## See vignette(&#39;programming&#39;) for more help</code></pre>
+## ℹ Please use `group_by()` instead.
+## ℹ See vignette(&#39;programming&#39;) for more help
+## ℹ The deprecated feature was likely used in the saeSim package.
+##   Please report the issue at &lt;https://github.com/wahani/saeSim/issues&gt;.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>setup</span></code></pre></div>
-<pre><code>## # Description: df [10,000 × 6]
+<pre><code>## # A data frame: 10,000 × 6
 ##     idD   idU      x     e     v     y
-##   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## * &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1     1     1 -2.51  -3.22 0.235  92.0
 ## 2     1     2  0.735 -4.23 0.235  97.5
 ## 3     1     3 -3.34  -4.14 0.235  89.4
 ## 4     1     4  6.38  -4.74 0.235 108. 
 ## 5     1     5  1.32  -2.00 0.235 101. 
 ## 6     1     6 -3.28  -2.10 0.235  91.6
-## # … with 9,994 more rows</code></pre>
+## # ℹ 9,994 more rows</code></pre>
 <p><code>sim_base()</code> is responsible to supply a <code>data.frame</code> to which variables can be added. The default is to create a <code>data.frame</code> with indicator variables <code>idD</code> and <code>idU</code> (2-level-model), which uniquely identify observations. ‘D’ stands for the domain, i.e. the grouping variable. ‘U’ stands for unit and is the identifier of single observations within domains. <code>sim_resp</code> will add a variable <code>y</code> as response.</p>
 <p>The setup itself does not contain the simulated data but the functions to process the data. To start a simulation use the function <code>sim</code>. It will return a <code>list</code> containing <code>data.frames</code> as elements:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>dataList &lt;-<span class="st"> </span><span class="kw">sim</span>(setup, <span class="dt">R =</span> <span class="dv">10</span>)</span></code></pre></div>
@@ -427,7 +445,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>saeSim has an interface to standard random number generators in R. If things get more complex you can always define new generator functions.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="kw">base_id</span>(<span class="dv">2</span>, <span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_gen</span>(<span class="kw">gen_generic</span>(rnorm, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">10</span>, <span class="dt">name =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">groupVars =</span> <span class="st">&quot;idD&quot;</span>))</span></code></pre></div>
-<pre><code>## # Description: df [6 × 3]
+<pre><code>## # A data frame: 6 × 3
 ##     idD   idU     x
 ##   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
 ## 1     1     1 -3.48
@@ -445,16 +463,16 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_gen</span>(<span class="kw">gen_v_sar</span>(<span class="dt">name =</span> <span class="st">&quot;vSp&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># random-effect following a SAR(1)</span></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_resp_eq</span>(<span class="dt">y =</span> <span class="dv">100</span> <span class="op">+</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>v <span class="op">+</span><span class="st"> </span>vSp <span class="op">+</span><span class="st"> </span>e) <span class="co"># Computing &#39;y&#39;</span></span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a>setup</span></code></pre></div>
-<pre><code>## # Description: df [10,000 × 7]
+<pre><code>## # A data frame: 10,000 × 7
 ##     idD   idU     x     e     v   vSp     y
-##   &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1     1     1 -3.26 -5.80 -1.29  1.44  91.1
-## 2     1     2  4.26  4.77 -1.29  1.44 109. 
-## 3     1     3 -3.07  1.02 -1.29  1.44  98.1
-## 4     1     4  5.21  2.32 -1.29  1.44 108. 
-## 5     1     5  1.91  8.53 -1.29  1.44 111. 
-## 6     1     6 -2.66  3.76 -1.29  1.44 101. 
-## # … with 9,994 more rows</code></pre>
+## * &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     1     1 -3.26 -5.80 -1.29  1.25  90.9
+## 2     1     2  4.26  4.77 -1.29  1.25 109. 
+## 3     1     3 -3.07  1.02 -1.29  1.25  97.9
+## 4     1     4  5.21  2.32 -1.29  1.25 107. 
+## 5     1     5  1.91  8.53 -1.29  1.25 110. 
+## 6     1     6 -2.66  3.76 -1.29  1.25 101. 
+## # ℹ 9,994 more rows</code></pre>
 </div>
 <div id="contaminated-data" class="section level3">
 <h3>Contaminated data</h3>
@@ -503,9 +521,9 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_resp_eq</span>(<span class="dt">y =</span> <span class="dv">100</span> <span class="op">+</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>e) <span class="op">%&gt;%</span></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true"></a><span class="st">   </span><span class="co"># the mean in each domain:</span></span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_comp_pop</span>(<span class="kw">comp_var</span>(<span class="dt">popMean =</span> <span class="kw">mean</span>(y)), <span class="dt">by =</span> <span class="st">&quot;idD&quot;</span>)</span></code></pre></div>
-<pre><code>## # Description: df [6 × 7]
+<pre><code>## # A data frame: 6 × 7
 ##     idD   idU      x     e idC       y popMean
-##   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+## * &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;   &lt;dbl&gt;
 ## 1     1     1  0.575 6.62  FALSE  107.    108.
 ## 2     1     2  3.77  0.226 FALSE  104.    108.
 ## 3     1     3 12.6   1.07  FALSE  114.    108.
@@ -524,9 +542,14 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true"></a><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_comp_pop</span>(comp_linearPredictor)</span></code></pre></div>
 <pre><code>## Warning: `mutate_()` was deprecated in dplyr 0.7.0.
-## Please use `mutate()` instead.
-## See vignette(&#39;programming&#39;) for more help</code></pre>
-<pre><code>## # Description: df [10,000 × 6]
+## ℹ Please use `mutate()` instead.
+## ℹ See vignette(&#39;programming&#39;) for more help
+## ℹ The deprecated feature was likely used in the saeSim package.
+##   Please report the issue at &lt;https://github.com/wahani/saeSim/issues&gt;.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
+<pre><code>## # A data frame: 10,000 × 6
 ##     idD   idU      x      e     y linearPredictor
 ##   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;           &lt;dbl&gt;
 ## 1     1     1 -8.50  -0.637  90.9            91.6
@@ -535,7 +558,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 ## 4     1     4  3.82   4.38  108.            104. 
 ## 5     1     5  0.615 -0.191 100.            101. 
 ## 6     1     6  0.382 -3.60   96.8           100. 
-## # … with 9,994 more rows</code></pre>
+## # ℹ 9,994 more rows</code></pre>
 <p>Or, should this be desirable, directly produce a list of <code>lm</code> objects or add them as attribute to the data. The intended way of writing functions is that they will return the modified data of class ‘data.frame’.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_comp_pop</span>(<span class="cf">function</span>(dat) <span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, dat)) <span class="op">%&gt;%</span></span>
@@ -569,31 +592,31 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_sample</span>() <span class="op">%&gt;%</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_comp_sample</span>(comp_linearPredictor)</span></code></pre></div>
-<pre><code>## # Description: df [500 × 6]
+<pre><code>## # A data frame: 500 × 6
 ##     idD   idU      x     e     y linearPredictor
-##   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;           &lt;dbl&gt;
+## * &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;           &lt;dbl&gt;
 ## 1     1     1 -2.35  -2.08  95.6            98.0
 ## 2     1    94 -6.89  -2.40  90.7            93.2
 ## 3     1    68  5.03  -3.87 101.            106. 
 ## 4     1    19  3.10   4.42 108.            104. 
 ## 5     1    27 -0.462  8.40 108.            100. 
 ## 6     2    95  5.02   1.59 107.            106. 
-## # … with 494 more rows</code></pre>
+## # ℹ 494 more rows</code></pre>
 <p>Should you want to apply area level models, use <code>sim_comp_agg</code> instead.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_sample</span>() <span class="op">%&gt;%</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_agg</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_comp_agg</span>(comp_linearPredictor)</span></code></pre></div>
-<pre><code>## # Description: df [100 × 5]
+<pre><code>## # A data frame: 100 × 5
 ##     idD      x      e     y linearPredictor
-##   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;           &lt;dbl&gt;
+## * &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;           &lt;dbl&gt;
 ## 1     1 -2.92   1.71   98.8            96.8
 ## 2     2 -0.211 -0.119  99.7            99.5
 ## 3     3  2.69  -1.60  101.            102. 
 ## 4     4  0.825 -4.47   96.4           101. 
 ## 5     5  1.40   0.510 102.            101. 
 ## 6     6  1.14   2.29  103.            101. 
-## # … with 94 more rows</code></pre>
+## # ℹ 94 more rows</code></pre>
 </div>
 </div>
 <div id="sim_sample" class="section level2">
@@ -606,22 +629,22 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true"></a><span class="kw">base_id</span>(<span class="dv">3</span>, <span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_gen_x</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_sample</span>(<span class="kw">sample_number</span>(1L))</span></code></pre></div>
-<pre><code>## # Description: df [1 × 3]
+<pre><code>## # A data frame: 1 × 3
 ##     idD   idU     x
 ##   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
 ## 1     2     3 -2.12</code></pre>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a><span class="kw">base_id</span>(<span class="dv">3</span>, <span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_gen_x</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">sim_sample</span>(<span class="kw">sample_number</span>(1L, <span class="dt">groupVars =</span> <span class="st">&quot;idD&quot;</span>))</span></code></pre></div>
-<pre><code>## # Description: df [3 × 3]
+<pre><code>## # A data frame: 3 × 3
 ##     idD   idU     x
-##   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+## * &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
 ## 1     1     3 -5.35
 ## 2     2     1 -9.71
 ## 3     3     2  1.48</code></pre>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true"></a><span class="co"># simple random sampling:</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true"></a><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sim_sample</span>(<span class="kw">sample_number</span>(<span class="dt">size =</span> 10L))</span></code></pre></div>
-<pre><code>## # Description: df [10 × 5]
+<pre><code>## # A data frame: 10 × 5
 ##     idD   idU      x     e     y
 ##   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1    79    72  2.37   2.01 104. 
@@ -630,9 +653,9 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 ## 4    57    31  6.09  -3.18 103. 
 ## 5    53    27 -1.84   2.84 101. 
 ## 6    45    26  0.549 -9.37  91.2
-## # … with 4 more rows</code></pre>
+## # ℹ 4 more rows</code></pre>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true"></a><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sim_sample</span>(<span class="kw">sample_fraction</span>(<span class="dt">size =</span> <span class="fl">0.05</span>))</span></code></pre></div>
-<pre><code>## # Description: df [500 × 5]
+<pre><code>## # A data frame: 500 × 5
 ##     idD   idU      x     e     y
 ##   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1    80     7 -3.73   7.14 103. 
@@ -641,30 +664,30 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 ## 4    62    95  5.93   1.97 108. 
 ## 5    76    80 -0.901  3.79 103. 
 ## 6     3    75  4.65  -3.96 101. 
-## # … with 494 more rows</code></pre>
+## # ℹ 494 more rows</code></pre>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true"></a><span class="co"># srs in each domain/cluster</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true"></a><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sim_sample</span>(<span class="kw">sample_number</span>(<span class="dt">size =</span> 10L, <span class="dt">groupVars =</span> <span class="st">&quot;idD&quot;</span>))</span></code></pre></div>
-<pre><code>## # Description: df [1,000 × 5]
+<pre><code>## # A data frame: 1,000 × 5
 ##     idD   idU      x      e     y
-##   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## * &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
 ## 1     1    13 -1.09    3.43 102. 
 ## 2     1    23 -5.01  -12.5   82.4
 ## 3     1    26 -0.670   1.25 101. 
 ## 4     1    68  5.73    5.13 111. 
 ## 5     1    47  0.721   6.89 108. 
 ## 6     1    15 -3.46    3.54 100. 
-## # … with 994 more rows</code></pre>
+## # ℹ 994 more rows</code></pre>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true"></a><span class="kw">sim_base_lm</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sim_sample</span>(<span class="kw">sample_fraction</span>(<span class="dt">size =</span> <span class="fl">0.05</span>, <span class="dt">groupVars =</span> <span class="st">&quot;idD&quot;</span>))</span></code></pre></div>
-<pre><code>## # Description: df [500 × 5]
+<pre><code>## # A data frame: 500 × 5
 ##     idD   idU      x     e     y
-##   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## * &lt;int&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1     1    18  2.43  -2.50  99.9
 ## 2     1    25 -0.341 -1.20  98.5
 ## 3     1    51  3.60   3.33 107. 
 ## 4     1    33 -1.02   3.62 103. 
 ## 5     1    16 -0.573 -8.28  91.1
 ## 6     2    49  6.05   1.11 107. 
-## # … with 494 more rows</code></pre>
+## # ℹ 494 more rows</code></pre>
 </div>
 
 

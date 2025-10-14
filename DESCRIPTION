@@ -1,7 +1,7 @@
 Package: saeSim
 Type: Package
 Title: Simulation Tools for Small Area Estimation
-Version: 0.11.0
+Version: 0.12.0
 Authors@R: c(person("Sebastian", "Warnholz", role = c("aut", "cre"),
                     email = "wahani@gmail.com"),
              person("Timo", "Schmid", role = "aut",
@@ -19,12 +19,12 @@ Description: Tools for the simulation of data in the context of small area
     results in a folder or start the simulation in parallel.
 License: MIT + file LICENSE
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.2
 Encoding: UTF-8
 NeedsCompilation: no
-Packaged: 2022-02-07 16:19:44 UTC; lswarnholz
+Packaged: 2025-10-14 19:58:59 UTC; lswarnholz
 Author: Sebastian Warnholz [aut, cre],
   Timo Schmid [aut]
 Maintainer: Sebastian Warnholz <wahani@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-02-07 16:40:02 UTC
+Date/Publication: 2025-10-14 20:20:02 UTC

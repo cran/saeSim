@@ -1,7 +1,7 @@
-## ---- results='asis', echo=FALSE----------------------------------------------
+## ----results='asis', echo=FALSE-----------------------------------------------
 cat(gsub("\\n   ", "", packageDescription("saeSim", fields = "Description")))
 
-## ---- echo=FALSE--------------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------
 set.seed(1)
 
 ## -----------------------------------------------------------------------------
@@ -15,32 +15,32 @@ setup <- sim_base() %>%
 setup
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  dataList <- sim(setup, R = 10)
+# dataList <- sim(setup, R = 10)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  simData <- sim_base() %>%
-#    sim_gen_x() %>%
-#    sim_gen_e() %>%
-#    as.data.frame
-#  simData
+# simData <- sim_base() %>%
+#   sim_gen_x() %>%
+#   sim_gen_e() %>%
+#   as.data.frame
+# simData
 
-## ---- eval=FALSE--------------------------------------------------------------
-#  setup <- sim_base() %>%
-#    sim_gen_x() %>%
-#    sim_gen_e() %>%
-#    sim_resp_eq(y = 100 + 2 * x + e)
-#  
-#  setup1 <- setup %>% sim_sample(sample_fraction(0.05))
-#  setup2 <- setup %>% sim_sample(sample_number(5))
+## ----eval=FALSE---------------------------------------------------------------
+# setup <- sim_base() %>%
+#   sim_gen_x() %>%
+#   sim_gen_e() %>%
+#   sim_resp_eq(y = 100 + 2 * x + e)
+# 
+# setup1 <- setup %>% sim_sample(sample_fraction(0.05))
+# setup2 <- setup %>% sim_sample(sample_number(5))
 
 ## -----------------------------------------------------------------------------
 setup <- sim_base_lmm()
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  plot(setup)
-#  autoplot(setup)
-#  autoplot(setup, "e")
-#  autoplot(setup %>% sim_gen_vc())
+# plot(setup)
+# autoplot(setup)
+# autoplot(setup, "e")
+# autoplot(setup %>% sim_gen_vc())
 
 ## -----------------------------------------------------------------------------
 base_id(2, 3) %>% 
